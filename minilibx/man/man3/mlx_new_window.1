@@ -6,21 +6,32 @@ MiniLibX - Managing windows
 .nf
 .I void *
 .fi
-.B mlx_new_window(.I void *mlx_ptr, int size_x, int size_y, char *title);
+.B mlx_new_window
+(
+.I void *mlx_ptr, int size_x, int size_y, char *title
+);
 
 .nf
 .I int
 .fi
-.B mlx_clear_window(.I void *mlx_ptr, void *win_ptr);
+.B mlx_clear_window
+(
+.I void *mlx_ptr, void *win_ptr
+);
 
 .nf
 .I int
 .fi
-.B mlx_destroy_window(.I void *mlx_ptr, void *win_ptr);
+.B mlx_destroy_window
+(
+.I void *mlx_ptr, void *win_ptr
+);
 
 
 .SH DESCRIPTION
-The .B mlx_new_window() function creates a new window on the screen, using the
+The
+.B mlx_new_window
+() function creates a new window on the screen, using the
 .I size_x
 and
 .I size_y

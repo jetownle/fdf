@@ -6,7 +6,7 @@
 #    By: jetownle <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/08 17:47:24 by jetownle          #+#    #+#              #
-#    Updated: 2019/08/09 17:16:00 by jetownle         ###   ########.fr        #
+#    Updated: 2019/08/21 03:33:18 by jetownle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ all: $(NAME)
 
 $(NAME):
 	make -C libft
-	gcc $(FLAGS) -o $(NAME) $(SRCF) -I $(HDRS) -L. libft/libft.a
+	make -C minilibx
+	gcc $(FLAGS) -o $(NAME) $(SRCF) -I $(HDRS) -L. libft/libft.a -L. ~/fdf/minilibx_macos/libmlx.a -framework OpenGL -framework Appkit
 
 clean: 
 	rm -rf *.o

@@ -6,27 +6,42 @@ MiniLibX - Handle events
 .nf
 .I int
 .fi
-.B mlx_loop(.I void *mlx_ptr);
+.B mlx_loop
+(
+.I void *mlx_ptr
+);
 
 .nf
 .I int
 .fi
-.B mlx_key_hook(.I void *win_ptr, int (*funct_ptr)(), void *param);
+.B mlx_key_hook
+(
+.I void *win_ptr, int (*funct_ptr)(), void *param
+);
 
 .nf
 .I int
 .fi
-.B mlx_mouse_hook(.I void *win_ptr, int (*funct_ptr)(), void *param);
+.B mlx_mouse_hook
+(
+.I void *win_ptr, int (*funct_ptr)(), void *param
+);
 
 .nf
 .I int
 .fi
-.B mlx_expose_hook(.I void *win_ptr, int (*funct_ptr)(), void *param);
+.B mlx_expose_hook
+(
+.I void *win_ptr, int (*funct_ptr)(), void *param
+);
 
 .nf
 .I int
 .fi
-.B mlx_loop_hook(.I void *mlx_ptr, int (*funct_ptr)(), void *param);
+.B mlx_loop_hook
+(
+.I void *mlx_ptr, int (*funct_ptr)(), void *param
+);
 
 .SH X-WINDOW EVENTS
 

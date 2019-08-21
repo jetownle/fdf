@@ -6,11 +6,16 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:05:34 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/13 04:13:40 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/21 07:48:20 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+/* 
+** if there's an input file we get sent to fdf function
+** otherwise display usage
+*/
 
 int			main(int argc, char **argv)
 {

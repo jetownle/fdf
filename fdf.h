@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:29:55 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/14 07:18:57 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/21 08:53:44 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "math.h"
 #include "minilibx/mlx.h"
 #include "libft/libft.h"
+#include "minilibx_macos/mlx.h"
 
 # define WIN_WIDTH					(1280)
 # define WIN_HEIGHT					(720)
@@ -58,7 +59,7 @@ typedef struct s_mlx
 {
 	void	*init;
 	void	*win;
-	void	*img;
+	void	*image;
 	void	*ptr;
 }				t_mlx;
 
@@ -72,6 +73,7 @@ typedef struct s_image
 
 typedef struct s_map
 {
+	int		**values;
 	float	x;
 	float	y;
 	float	z;
@@ -88,6 +90,17 @@ typedef	struct	s_fdf
 
 int		main(int argc, char **argv);
 int		fdf(int fd);
+//static int keys(int keycode, t_fdf *fdf);
+int		render(t_fdf *fdf);
+
+/* 
+** Read functs
+*/
 char	**ft_read(int fd);
+void mapatoi(t_fdf *fdf, int fd);
+void splitatoi(t_fdf *fdf, int y, int z, char *line);
+int validity(char *line);
+int		count_lines(t_fdf *fdf, int fd);
+
 
 #endif
