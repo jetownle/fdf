@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:06:27 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/21 08:53:48 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/22 03:52:57 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** strsplits the line and then stores the converted int values in the struct
 */
 
-void splitatoi(t_fdf *fdf, int y, int z, char *line)
+void value_splatoi(t_fdf *fdf, int y, int z, char *line)
 {
 	int		i;
 	char	**split;
@@ -27,7 +27,7 @@ void splitatoi(t_fdf *fdf, int y, int z, char *line)
 		while (split[i] && (y != fdf->map.width))
 		{
 			fdf->map.values[z][y] = ft_atoi(split[i++]);
-			y += 1;
+			y++;
 		}
 		free(split);
 	}
@@ -37,7 +37,7 @@ void splitatoi(t_fdf *fdf, int y, int z, char *line)
 ** converting the ascii file into an int map
 */
 
-void	mapatoi(t_fdf *fdf, int fd)
+void	value_atoi(t_fdf *fdf, int fd)
 {
 	int y;
 	int z;
@@ -47,10 +47,11 @@ void	mapatoi(t_fdf *fdf, int fd)
 	z = 0;
 	while (get_next_line(fd, &line) == 1 && z != fdf->map.height)
 	{
-		fdf->map.values[z] = (int *)malloc(sizeof(int) * fdf->map.width);
-		splitatoi(fdf, y, z, line);
+		if(!(fdf->map.values[z] = (int *)malloc(sizeof(int) * fdf->map.width)))
+			perror(error mallocing values[z]);
+		value_splatoi(fdf, y, z, line);
 		y = 0;
-		z += 1;
+		z++;
 		free(line);
 	}
 }
@@ -59,26 +60,28 @@ void	mapatoi(t_fdf *fdf, int fd)
 ** checks line for digits, spaces, '-' and returns length (columns)
 */
 
-int validity(char *line)
+int value_count(char *line)
 {
 	int		len;
+	
 	len = 0;
 	while (*line)
 	{
 		if (ft_isdigit(*line))
 		{
-			len += 1;
+			len++;
 			while (ft_isdigit(*line))
-				line += 1;
+				line++;
 		}
-		else if (*line == ' ' && *line == '-')
-			line += 1;
+		else if (*line != ' ' && *line != '-')
+			perror("error not a valid file");
+		line++;
 	}
 	return (len);
 }
 
 /* 
-** width and length of the map (valid files only)
+** width and length of the map, lines should all be same length
 */
 
 int count_lines(t_fdf *fdf, int fd)
@@ -94,9 +97,9 @@ int count_lines(t_fdf *fdf, int fd)
 	{
 		if (*line == '\0')
 			break ;
-		if ((len = validity(line)) > cols)
+		if ((len = value_count(line)) > cols)
 			cols = len;
-		rows += 1;
+		(cols == len) ? rows++ : perror("error not a valid file");
 		free(line);
 	}
 	fdf->map.width = cols;

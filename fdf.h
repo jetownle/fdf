@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:29:55 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/21 08:53:44 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/22 10:31:30 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,21 @@ typedef struct s_image
 typedef struct s_map
 {
 	int		**values;
-	float	x;
-	float	y;
-	float	z;
+	int		x1;
+	int		y1;
+	int		x2;
+	int		y2;
+	int		dx;
+	int		dy;
+	int		incx;
+	int		incy;
+	int		i;
+	int		j;
+	int		k;
 	int		width;
 	int		height;
+	int		startx;
+	int		starty;
 }				t_map;
 
 typedef	struct	s_fdf
@@ -97,10 +107,15 @@ int		render(t_fdf *fdf);
 ** Read functs
 */
 char	**ft_read(int fd);
-void mapatoi(t_fdf *fdf, int fd);
-void splitatoi(t_fdf *fdf, int y, int z, char *line);
-int validity(char *line);
+void value_atoi(t_fdf *fdf, int fd);
+void value_splatoi(t_fdf *fdf, int y, int z, char *line);
+int value_count(char *line);
 int		count_lines(t_fdf *fdf, int fd);
+void	draw_vertical(t_fdf *fdf);
+void	draw_horizontal(t_fdf *fdf);
+void 	bh_dispatch(t_fdf *fdf);
+void	m_neg(t_fdf *fdf);
+void	m_pos(t_fdf *fdf);
 
 
 #endif
