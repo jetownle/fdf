@@ -6,7 +6,7 @@
 #    By: jetownle <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/08 17:47:24 by jetownle          #+#    #+#              #
-#    Updated: 2019/08/21 03:33:18 by jetownle         ###   ########.fr        #
+#    Updated: 2019/08/26 14:01:20 by jetownle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ fclean: clean
 
 re: fclean all
 
-debug:
+debug: fclean
 	make -C libft/
-	gcc -g $(FLAGS) -o $(NAME) $(SRCF) -I $(HDRS) -L. libft/libft.a
+	make -C minilibx
+	gcc -g $(FLAGS) -o $(NAME) $(SRCF) -I $(HDRS) -L. libft/libft.a -L. ~/fdf/minilibx_macos/libmlx.a -framework OpenGL -framework Appkit
 

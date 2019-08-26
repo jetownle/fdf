@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 19:14:23 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/26 11:31:56 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/26 14:09:46 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			fdf(int fd)
 	if(!(fdf->map.values = (int **)malloc(sizeof(int *) * fdf->map.height)))
 		perror("error mallocing values");
 	value_atoi(fdf, fd);
-	fdf->mlx.win = mlx_init();
+	fdf->mlx.init = mlx_init();
 	fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIN_WIDTH, WIN_HEIGHT, "42");
 	reset(fdf);
 	mlx_expose_hook(fdf->mlx.win, render, fdf);
