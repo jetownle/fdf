@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:06:27 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/22 03:52:57 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/26 11:41:39 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	value_atoi(t_fdf *fdf, int fd)
 	while (get_next_line(fd, &line) == 1 && z != fdf->map.height)
 	{
 		if(!(fdf->map.values[z] = (int *)malloc(sizeof(int) * fdf->map.width)))
-			perror(error mallocing values[z]);
+			perror("error mallocing values[z]");
 		value_splatoi(fdf, y, z, line);
 		y = 0;
 		z++;

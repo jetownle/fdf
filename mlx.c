@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 03:46:58 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/22 10:33:33 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/26 11:41:14 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,59 +14,64 @@
 
 void	draw_vertical(t_fdf *fdf)
 {
-	int j;
+	int x;
+	int y;
 
-	while (i < t_map->height)
+	y = 0;
+	while (y < fdf->map.height)
 	{
-		j = 0;
-		while (j < (t_map->width - 1))
+		x = 0;
+		while (x < (fdf->map.width - 1))
 		{
-			t_map->x1 = t_map->startx - (t_map->scalx * y) \
-						+ (t_map->scalx * x);
-			t_map->y1 = t_map->starty + ((t_map->scaly) * x) \
-					   	+ ((t_map->scaly) * y) - (t_map->values[i][j] * 2);
-			j++;
-			t_map->x2 = t_map->startx - (t_map->scalx * y) \
-						+ (t_map->scalx * x);
-			t_map->y2 = t_map->starty + ((t_map->scaly) * x) \
-						+ ((t_map->scaly) * y) - (t_map->values[i][j] * 2);
+			fdf->map.x1 = fdf->map.startx - (fdf->map.scalx * y) \
+						+ (fdf->map.scalx * x);
+			fdf->map.y1 = fdf->map.starty + ((fdf->map.scaly) * x) \
+					   	+ ((fdf->map.scaly) * y) - (fdf->map.values[y][x] * 2);
+			x++;
+			fdf->map.x2 = fdf->map.startx - (fdf->map.scalx * y) \
+						+ (fdf->map.scalx * x);
+			fdf->map.y2 = fdf->map.starty + ((fdf->map.scaly) * x) \
+						+ ((fdf->map.scaly) * y) - (fdf->map.values[y][x] * 2);
 			bh_dispatch(fdf);
 		}
+		y++;
 	}
 }
 
 void	draw_horizontal(t_fdf *fdf)
 {
-	int j;
+	int x;
+	int y;
 
-	while (i < (t_map->height - 1))
+	y = 0;
+	while (y < (fdf->map.height - 1))
 	{
-		j = 0;
-		while (j < t_map->width && (t_map->width + 1 - j) > 0)
+		x = 0;
+		while (x < fdf->map.width && (fdf->map.width + 1 - x) > 0)
 		{
-			t_map->x1 = t_map->startx - (t_map->scalx * y) \
-						+ (t_map->scalx * x);
-			t_map->y1 = t_map->starty + ((t_map->scaly) * x) \
-					   	+ ((t_map->scaly) * y) - (t_map->values[i][j] * 2);
-			t_map->x2 = t_map->startx - (t_map->scalx * y) \
-						+ (t_map->scalx * x);
-			t_map->y2 = t_map->starty + ((t_map->scaly) * x) \
-						+ ((t_map->scaly) * y) - (t_map->values[i + 1][j] * 2);
+			fdf->map.x1 = fdf->map.startx - (fdf->map.scalx * y) \
+						+ (fdf->map.scalx * x);
+			fdf->map.y1 = fdf->map.starty + ((fdf->map.scaly) * x) \
+					   	+ ((fdf->map.scaly) * y) - (fdf->map.values[y][x] * 2);
+			fdf->map.x2 = fdf->map.startx - (fdf->map.scalx * y) \
+						+ (fdf->map.scalx * x);
+			fdf->map.y2 = fdf->map.starty + ((fdf->map.scaly) * x) \
+						+ ((fdf->map.scaly) * y) - (fdf->map.values[y + 1][x] * 2);
 			bh_dispatch(fdf);
-			j++;
+			x++;
 		}
 	}
 }
 
 void bh_dispatch(t_fdf *fdf)
 {
-	t_map->dx = t_map->x2 - t_map->x1;
-	t_map->dy = t_map->y2 - t_map->y1;
-	t_map->dx = abs(t_map->dx);
-	t_map->dy = abs(t_map->dy);
-	t_map->incx = (t_map->x2 > t_map->x1 ? 1 : -1;
-	t_map->incy = (t_map->y2 > t_map->y1 ? 1 : -1;
-	if (t_map->dx > t_map->dy)
+	fdf->map.dx = fdf->map.x2 - fdf->map.x1;
+	fdf->map.dy = fdf->map.y2 - fdf->map.y1;
+	fdf->map.dx = abs(fdf->map.dx);
+	fdf->map.dy = abs(fdf->map.dy);
+	fdf->map.incx = (fdf->map.x2 > fdf->map.x1) ? 1 : -1;
+	fdf->map.incy = (fdf->map.y2 > fdf->map.y1) ? 1 : -1;
+	if (fdf->map.dx > fdf->map.dy)
 		m_neg(fdf);
 	else
 		m_pos(fdf);
@@ -77,10 +82,12 @@ int		render(t_fdf *fdf)
 {
 	draw_vertical(fdf);
 	draw_horizontal(fdf);
+	return (0);
 }
 
-int exit_key(int keycode)
+int exit_key(int keycode, void *param)
 {
+	param = 0;
 	if (keycode == KEY_ESCAPE)
 		exit(0);
 	return (0);

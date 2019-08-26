@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:29:55 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/22 10:31:30 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/26 11:32:34 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ typedef struct s_map
 	int		height;
 	int		startx;
 	int		starty;
+	int		scalx;
+	int		scaly;
 }				t_map;
 
 typedef	struct	s_fdf
@@ -100,7 +102,7 @@ typedef	struct	s_fdf
 
 int		main(int argc, char **argv);
 int		fdf(int fd);
-//static int keys(int keycode, t_fdf *fdf);
+int exit_key(int keycode, void *param);
 int		render(t_fdf *fdf);
 
 /* 
@@ -116,6 +118,6 @@ void	draw_horizontal(t_fdf *fdf);
 void 	bh_dispatch(t_fdf *fdf);
 void	m_neg(t_fdf *fdf);
 void	m_pos(t_fdf *fdf);
-
+void	reset(t_fdf *fdf);
 
 #endif

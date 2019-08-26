@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 19:14:23 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/22 10:37:20 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/26 11:31:56 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int			fdf(int fd)
 	value_atoi(fdf, fd);
 	fdf->mlx.win = mlx_init();
 	fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIN_WIDTH, WIN_HEIGHT, "42");
-	reset(&fdf);
+	reset(fdf);
 	mlx_expose_hook(fdf->mlx.win, render, fdf);
-	mlx_key_hook(fdf->mlx.win, keys);
+	mlx_key_hook(fdf->mlx.win, exit_key, fdf);
 	mlx_loop(fdf->mlx.init);
 
 	return (0);
@@ -46,21 +46,21 @@ void	m_neg(t_fdf *fdf)
 	int	i;
 
 	i = 0;
-	mlx_pixel_put(mlx->init, mlx->win, t_map->x1, t_map->y1, 0xFFFFFF);
-	e = (2 * t_map->dy) - t_map->dx;
-	inc1 = 2 * (t_map->dy - t_map->dx);
-	inc2 = 2 * t_map->dy;
-	while (i < t_map->dx)
+	mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, fdf->map.x1, fdf->map.y1, 0xFFFFFF);
+	e = (2 * fdf->map.dy) - fdf->map.dx;
+	inc1 = 2 * (fdf->map.dy - fdf->map.dx);
+	inc2 = 2 * fdf->map.dy;
+	while (i < fdf->map.dx)
 	{
 		if (e >= 0)
 		{
-			t_map->y1 = t_map->y1 + t_map->incy;
+			fdf->map.y1 = fdf->map.y1 + fdf->map.incy;
 			e = e + inc1;
 		}
 		else
 			e = e + inc2;
-		t_map->x1 = t_map->x1 + t_map->incx;
-		mlx_pixel_put(mlx->init, mlx->win, t_map->x1, t_map->y1, 0xFFFFFF);
+		fdf->map.x1 = fdf->map.x1 + fdf->map.incx;
+		mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, fdf->map.x1, fdf->map.y1, 0xFFFFFF);
 		i++;
 	}
 }
@@ -73,30 +73,30 @@ void	m_pos(t_fdf *fdf)
 	int	i;
 
 	i = 0;
-	mlx_pixel_put(mlx->init, mlx->win, t_map->x1, t_map->y1, 0xFFFFFF);
-	e = (2 * t_map->dx) - t_map->dy;
-	inc1 = 2 * (t_map->dx - t_map->dy);
-	inc2 = 2 * t_map->dx;
-	while (i < fdf->dy)
+	mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, fdf->map.x1, fdf->map.y1, 0xFFFFFF);
+	e = (2 * fdf->map.dx) - fdf->map.dy;
+	inc1 = 2 * (fdf->map.dx - fdf->map.dy);
+	inc2 = 2 * fdf->map.dx;
+	while (i < fdf->map.dy)
 	{
 		if (e >= 0)
 		{
-			t_map->x1 = t_map->x1 + t_map->incx;
+			fdf->map.x1 = fdf->map.x1 + fdf->map.incx;
 			e = e + inc1;
 		}
 		else
 			e = e + inc2;
-		t_map->y1 = t_map->y1 + t_map->incy;
-		mlx_pixel_put(mlx->init, mlx->win, t_map->x1, t_map->y1, 0xFFFFFF);
+		fdf->map.y1 = fdf->map.y1 + fdf->map.incy;
+		mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, fdf->map.x1, fdf->map.y1, 0xFFFFFF);
 		i++;
 	}
 }
 
 void	reset(t_fdf *fdf)
 {
-	fdf->scalx = 24;
-	fdf->scaly = 42;
-	fdf->startx = 666;
-	fdf->starty = 33;
+	fdf->map.scalx = 24;
+	fdf->map.scaly = 42;
+	fdf->map.startx = 666;
+	fdf->map.starty = 33;
 }
 
