@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:29:55 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/26 11:32:34 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/27 18:06:04 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,18 +101,18 @@ typedef	struct	s_fdf
 }				t_fdf;
 
 int		main(int argc, char **argv);
-int		fdf(int fd);
+int		fdf(int fd, char **argv);
 int exit_key(int keycode, void *param);
 int		render(t_fdf *fdf);
 
 /* 
 ** Read functs
 */
-char	**ft_read(int fd);
-void value_atoi(t_fdf *fdf, int fd);
+char	**ft_read(t_fdf *fdf,int fd, char **argv);
+void value_atoi(t_fdf *fdf, char **argv);
 void value_splatoi(t_fdf *fdf, int y, int z, char *line);
 int value_count(char *line);
-int		count_lines(t_fdf *fdf, int fd);
+int		count_lines(t_fdf *fdf, char *argv);
 void	draw_vertical(t_fdf *fdf);
 void	draw_horizontal(t_fdf *fdf);
 void 	bh_dispatch(t_fdf *fdf);

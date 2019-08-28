@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 19:14:23 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/26 14:09:46 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/27 18:05:06 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,19 @@
 ** core of the program, calls most of the functions, makes the struct of structs
 */
 
-int			fdf(int fd)
+int			fdf(int fd, char **argv)
 {
 	t_fdf	*fdf;
 	char	**gnlread;
 
 	if (!(fdf = (t_fdf *)malloc(sizeof(t_fdf))))
 		perror("error mallocing fdf struct");
-	gnlread = ft_read(fd);
-	fdf->map.height = count_lines(fdf, fd);
-	if(!(fdf->map.values = (int **)malloc(sizeof(int *) * fdf->map.height)))
-		perror("error mallocing values");
-	value_atoi(fdf, fd);
+	gnlread = ft_read(fdf, fd, argv);
 	fdf->mlx.init = mlx_init();
 	fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIN_WIDTH, WIN_HEIGHT, "42");
 	reset(fdf);
-	mlx_expose_hook(fdf->mlx.win, render, fdf);
-	mlx_key_hook(fdf->mlx.win, exit_key, fdf);
+	mlx_expose_hook(fdf->mlx.win, render, &fdf);
+	mlx_key_hook(fdf->mlx.win, exit_key, &fdf);
 	mlx_loop(fdf->mlx.init);
 
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:05:34 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/21 07:48:20 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/27 18:04:10 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int			main(int argc, char **argv)
 		return (-1);
 	}
 	fd = open(argv[1], O_RDONLY);
-	if (fd < 0 || fdf(fd) == -1)
+	if (fd < 0 || fdf(fd, argv) == -1)
 	{
 		ft_putstr("error\n");
 		return (-1);

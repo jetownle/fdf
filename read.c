@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:06:27 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/26 11:41:39 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/27 18:07:43 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ void value_splatoi(t_fdf *fdf, int y, int z, char *line)
 ** converting the ascii file into an int map
 */
 
-void	value_atoi(t_fdf *fdf, int fd)
+void	value_atoi(t_fdf *fdf, char **argv)
 {
 	int y;
 	int z;
 	char *line;
+	int fd;
 
 	y = 0;
 	z = 0;
+	fd = open(argv[1], O_RDONLY);
 	while (get_next_line(fd, &line) == 1 && z != fdf->map.height)
 	{
 		if(!(fdf->map.values[z] = (int *)malloc(sizeof(int) * fdf->map.width)))
@@ -54,6 +56,7 @@ void	value_atoi(t_fdf *fdf, int fd)
 		z++;
 		free(line);
 	}
+	close(fd);
 }
 
 /* 
@@ -84,13 +87,15 @@ int value_count(char *line)
 ** width and length of the map, lines should all be same length
 */
 
-int count_lines(t_fdf *fdf, int fd)
+int count_lines(t_fdf *fdf, char *argv)
 {
 	int len;
 	int rows;
 	int cols;
 	char *line;
+	int fd;
 
+	fd = open(&argv[1], O_RDONLY);
 	rows = 0;
 	cols = 0;
 	while (get_next_line(fd, &line) == 1)
@@ -102,6 +107,7 @@ int count_lines(t_fdf *fdf, int fd)
 		(cols == len) ? rows++ : perror("error not a valid file");
 		free(line);
 	}
+	close(fd);
 	fdf->map.width = cols;
 	return (rows);
 }
@@ -111,7 +117,7 @@ int count_lines(t_fdf *fdf, int fd)
 ** do I even need this? who knows
 */
 
-char	**ft_read(int fd)
+char	**ft_read(t_fdf *fdf, int fd, char **argv)
 {
 	char	**gnlread;
 	char	**temp;
@@ -119,8 +125,6 @@ char	**ft_read(int fd)
 	size_t	i;
 	size_t	count;
 
-	if (fd < 0)
-		return (NULL);
 	count = 0;
 	gnlread = NULL;
 	while (get_next_line(fd, &holder) == 1)
@@ -134,7 +138,11 @@ char	**ft_read(int fd)
 						gnlread[i - 1] = temp[i - 1];
 		gnlread[count - 1] = holder;
 		ft_strdel((char **)&temp);
+		fdf->map.width = value_count(*gnlread);
 	}
+	fdf->map.height = count;
+	fdf->map.values = (int **)malloc(sizeof(int *) * fdf->map.height);
+	value_atoi(fdf, argv);
 	return (gnlread);
 }
 

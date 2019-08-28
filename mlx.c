@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 03:46:58 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/26 11:41:14 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/26 14:18:22 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		render(t_fdf *fdf)
 {
 	draw_vertical(fdf);
 	draw_horizontal(fdf);
-	return (0);
+	return (1);
 }
 
 int exit_key(int keycode, void *param)
