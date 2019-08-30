@@ -6,11 +6,21 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 03:46:58 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/26 14:18:22 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/28 17:53:56 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int		coord_y(t_fdf *fdf, int x, int y, int z)
+{
+	if (z > 30000)
+		z = 30000;
+	if (z < -30000)
+		z = -30000;
+	return (fdf->map.starty + ((fdf->map.scaly) * x) \
+		   	+ ((fdf->map.scaly) * y) - (z * 2));
+}
 
 void	draw_vertical(t_fdf *fdf)
 {
@@ -25,13 +35,11 @@ void	draw_vertical(t_fdf *fdf)
 		{
 			fdf->map.x1 = fdf->map.startx - (fdf->map.scalx * y) \
 						+ (fdf->map.scalx * x);
-			fdf->map.y1 = fdf->map.starty + ((fdf->map.scaly) * x) \
-					   	+ ((fdf->map.scaly) * y) - (fdf->map.values[y][x] * 2);
+			fdf->map.y1 = coord_y(fdf, x, y, fdf->map.values[y][x]);
 			x++;
 			fdf->map.x2 = fdf->map.startx - (fdf->map.scalx * y) \
 						+ (fdf->map.scalx * x);
-			fdf->map.y2 = fdf->map.starty + ((fdf->map.scaly) * x) \
-						+ ((fdf->map.scaly) * y) - (fdf->map.values[y][x] * 2);
+			fdf->map.y2 = coord_y(fdf, x, y, fdf->map.values[y][x]);
 			bh_dispatch(fdf);
 		}
 		y++;
@@ -51,12 +59,10 @@ void	draw_horizontal(t_fdf *fdf)
 		{
 			fdf->map.x1 = fdf->map.startx - (fdf->map.scalx * y) \
 						+ (fdf->map.scalx * x);
-			fdf->map.y1 = fdf->map.starty + ((fdf->map.scaly) * x) \
-					   	+ ((fdf->map.scaly) * y) - (fdf->map.values[y][x] * 2);
-			fdf->map.x2 = fdf->map.startx - (fdf->map.scalx * y) \
+			fdf->map.y1 = coord_y(fdf, x, y, fdf->map.values[y][x]);
+			fdf->map.x2 = fdf->map.startx - (fdf->map.scalx * (y + 1)) \
 						+ (fdf->map.scalx * x);
-			fdf->map.y2 = fdf->map.starty + ((fdf->map.scaly) * x) \
-						+ ((fdf->map.scaly) * y) - (fdf->map.values[y + 1][x] * 2);
+			fdf->map.y2 = coord_y(fdf, x, y + 1, fdf->map.values[y + 1][x]);
 			bh_dispatch(fdf);
 			x++;
 		}
@@ -93,10 +99,3 @@ int exit_key(int keycode, void *param)
 	return (0);
 }
 
-
-/*  fdf->mlx.image = mlx_new_image(fdf->mlx.init, WIN_WIDTH, WIN_HEIGHT);
-	fdf->image.data = mlx_get_data_addr(fdf->mlx.image, &fdf->image.bpp, \
-			&fdf->image.size, &fdf->image.endian);
-	mlx_destroy_image(fdf->mlx.init, fdf->mlx.image);
-	return (0);
- */

@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:06:27 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/27 18:07:43 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/28 14:15:36 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	value_atoi(t_fdf *fdf, char **argv)
 }
 
 /* 
-** checks line for digits, spaces, '-' and returns length (columns)
+** checks line for digits, spaces, '-' and returns width
 */
 
 int value_count(char *line)
@@ -83,35 +83,6 @@ int value_count(char *line)
 	return (len);
 }
 
-/* 
-** width and length of the map, lines should all be same length
-*/
-
-int count_lines(t_fdf *fdf, char *argv)
-{
-	int len;
-	int rows;
-	int cols;
-	char *line;
-	int fd;
-
-	fd = open(&argv[1], O_RDONLY);
-	rows = 0;
-	cols = 0;
-	while (get_next_line(fd, &line) == 1)
-	{
-		if (*line == '\0')
-			break ;
-		if ((len = value_count(line)) > cols)
-			cols = len;
-		(cols == len) ? rows++ : perror("error not a valid file");
-		free(line);
-	}
-	close(fd);
-	fdf->map.width = cols;
-	return (rows);
-}
-		
 /* 
 ** reads input file into a double pointer array gnlread
 ** do I even need this? who knows

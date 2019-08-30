@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:29:55 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/27 18:06:04 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/28 15:49:13 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,37 +23,9 @@
 #include "libft/libft.h"
 #include "minilibx_macos/mlx.h"
 
-# define WIN_WIDTH					(1280)
-# define WIN_HEIGHT					(720)
-# define KEY_ANSI_A					(0X00)
-# define KEY_ANSI_S					(0X01)
-# define KEY_ANSI_D			 		(0X02)
-# define KEY_ANSI_V			 		(0X09)
-# define KEY_ANSI_B			 		(0X0B)
-# define KEY_ANSI_Q			 		(0X0C)
-# define KEY_ANSI_W			 		(0X0D)
-# define KEY_ANSI_E			 		(0X0E)
-# define KEY_ANSI_R			 		(0X0F)
-# define KEY_ANSI_1			 		(0X12)
-# define KEY_ANSI_2			 		(0X13)
-# define KEY_ANSI_3			 		(0X14)
-# define KEY_ANSI_4			 		(0X15)
-# define KEY_ANSI_6			 		(0X16)
-# define KEY_ANSI_5			 		(0X17)
-# define KEY_ANSI_9			 		(0X19)
-# define KEY_ANSI_7			 		(0X1A)
-# define KEY_ANSI_8			 		(0X1C)
-# define KEY_ANSI_0			 		(0X1D)
-# define KEY_ANSI_J			 		(0X26)
-# define KEY_ANSI_K			 		(0X28)
-# define KEY_ANSI_N			 		(0X2D)
-# define KEY_ANSI_M			 		(0X2E)
+# define WIN_WIDTH					(1920)
+# define WIN_HEIGHT					(1080)
 # define KEY_ESCAPE			 		(0X35)
-# define KEY_LEFTARROW		  		(0X7B)
-# define KEY_RIGHTARROW		 		(0X7C)
-# define KEY_DOWNARROW		  		(0X7D)
-# define KEY_UPARROW				(0X7E)
-
 
 typedef struct s_mlx
 {
@@ -112,12 +84,11 @@ char	**ft_read(t_fdf *fdf,int fd, char **argv);
 void value_atoi(t_fdf *fdf, char **argv);
 void value_splatoi(t_fdf *fdf, int y, int z, char *line);
 int value_count(char *line);
-int		count_lines(t_fdf *fdf, char *argv);
 void	draw_vertical(t_fdf *fdf);
 void	draw_horizontal(t_fdf *fdf);
 void 	bh_dispatch(t_fdf *fdf);
 void	m_neg(t_fdf *fdf);
 void	m_pos(t_fdf *fdf);
-void	reset(t_fdf *fdf);
+void	init(t_fdf *fdf);
 
 #endif
