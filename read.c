@@ -6,32 +6,11 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:06:27 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/28 14:15:36 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/30 15:47:18 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/* 
-** strsplits the line and then stores the converted int values in the struct
-*/
-
-void value_splatoi(t_fdf *fdf, int y, int z, char *line)
-{
-	int		i;
-	char	**split;
-
-	if((split = ft_strsplit(line, ' ')))
-	{
-		i = 0;
-		while (split[i] && (y != fdf->map.width))
-		{
-			fdf->map.values[z][y] = ft_atoi(split[i++]);
-			y++;
-		}
-		free(split);
-	}
-}
 
 /* 
 ** converting the ascii file into an int map
@@ -39,21 +18,29 @@ void value_splatoi(t_fdf *fdf, int y, int z, char *line)
 
 void	value_atoi(t_fdf *fdf, char **argv)
 {
+	int fd;
 	int y;
 	int z;
 	char *line;
-	int fd;
-
+	char **split;
+	
 	y = 0;
 	z = 0;
 	fd = open(argv[1], O_RDONLY);
 	while (get_next_line(fd, &line) == 1 && z != fdf->map.height)
 	{
-		if(!(fdf->map.values[z] = (int *)malloc(sizeof(int) * fdf->map.width)))
-			perror("error mallocing values[z]");
-		value_splatoi(fdf, y, z, line);
+		fdf->map.values[z] = (int *)malloc(sizeof(int) * fdf->map.width);
+		if((split = ft_strsplit(line, ' ')))
+		{
+			fdf->map.j = 0;
+			while (split[fdf->map.j] && (y != fdf->map.width))
+			{
+				fdf->map.values[z][y] = ft_atoi(split[fdf->map.j++]);
+				y += 1;
+			}
+		}
 		y = 0;
-		z++;
+		z += 1;
 		free(line);
 	}
 	close(fd);

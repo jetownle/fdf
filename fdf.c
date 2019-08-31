@@ -6,33 +6,11 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 19:14:23 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/28 15:53:21 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/30 17:42:18 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-/* 
-** core of the program, calls most of the functions, makes the struct of structs
-*/
-
-int			fdf(int fd, char **argv)
-{
-	t_fdf	*fdf;
-	char	**gnlread;
-
-	if (!(fdf = (t_fdf *)malloc(sizeof(t_fdf))))
-		perror("error mallocing fdf struct");
-	fdf->mlx.init = mlx_init();
-	fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIN_WIDTH, WIN_HEIGHT, "42");
-	init(fdf);
-	gnlread = ft_read(fdf, fd, argv);
-	mlx_expose_hook(fdf->mlx.win, render, &fdf);
-	mlx_key_hook(fdf->mlx.win, exit_key, &fdf);
-	mlx_loop(fdf->mlx.init);
-
-	return (0);
-}
 
 void	m_neg(t_fdf *fdf)
 {
@@ -94,5 +72,31 @@ void	init(t_fdf *fdf)
 	fdf->map.scaly = 20;
 	fdf->map.startx = 850;
 	fdf->map.starty = 50;
+}
+
+/* 
+** core of the program, calls most of the functions, makes the struct of structs
+*/
+
+int			fdf(int fd, char **argv)
+{
+	t_fdf	*fdf;
+	char	**gnlread;
+
+	if (!(fdf = (t_fdf *)malloc(sizeof(t_fdf))))
+		perror("error mallocing fdf struct");
+	init(fdf);
+	gnlread = ft_read(fdf, fd, argv);
+	//for (i = 0; i <  fdf->map.height; i++)
+	//	for (j = 0; j < fdf->map.width; j++)
+	//		printf("%d ", fdf->map.values[i][j]);
+	
+	fdf->mlx.init = mlx_init();
+	fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIN_WIDTH, WIN_HEIGHT, "42");
+	mlx_expose_hook(fdf->mlx.win, render, &fdf);
+	mlx_key_hook(fdf->mlx.win, exit_key, &fdf);
+	mlx_loop(fdf->mlx.init);
+
+	return (0);
 }
 

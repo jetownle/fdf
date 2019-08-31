@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:29:55 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/28 15:49:13 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/30 15:01:56 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@ typedef struct s_mlx
 	void	*ptr;
 }				t_mlx;
 
-typedef struct s_image
-{
-	char	*data;
-	int		size;
-	int		endian;
-	int		bpp;
-}				t_image;
-
 typedef struct s_map
 {
 	int		**values;
@@ -69,7 +61,6 @@ typedef	struct	s_fdf
 {
 	t_mlx	mlx;
 	t_map	map;
-	t_image	image;
 }				t_fdf;
 
 int		main(int argc, char **argv);
@@ -82,7 +73,6 @@ int		render(t_fdf *fdf);
 */
 char	**ft_read(t_fdf *fdf,int fd, char **argv);
 void value_atoi(t_fdf *fdf, char **argv);
-void value_splatoi(t_fdf *fdf, int y, int z, char *line);
 int value_count(char *line);
 void	draw_vertical(t_fdf *fdf);
 void	draw_horizontal(t_fdf *fdf);

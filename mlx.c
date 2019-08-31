@@ -6,20 +6,29 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 03:46:58 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/28 17:53:56 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/30 17:40:31 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		coord_y(t_fdf *fdf, int x, int y, int z)
+int		coord_x(t_fdf *fdf, int y, int x)
+{
+	return (fdf->map.startx - (fdf->map.scalx * x) + (fdf->map.scalx * y));
+}
+
+int		coord_y(t_fdf *fdf, int y, int x, int z)
 {
 	if (z > 30000)
+	{
 		z = 30000;
+	}
 	if (z < -30000)
+	{
 		z = -30000;
-	return (fdf->map.starty + ((fdf->map.scaly) * x) \
-		   	+ ((fdf->map.scaly) * y) - (z * 2));
+	}
+	return (fdf->map.starty + ((fdf->map.scaly) * y) \
+		   	+ ((fdf->map.scaly) * x) - (z * 2));
 }
 
 void	draw_vertical(t_fdf *fdf)
@@ -27,22 +36,20 @@ void	draw_vertical(t_fdf *fdf)
 	int x;
 	int y;
 
-	y = 0;
-	while (y < fdf->map.height)
+	x = 0;
+	while (x < fdf->map.height)
 	{
-		x = 0;
-		while (x < (fdf->map.width - 1))
+		y = 0;
+		while (y < (fdf->map.width - 1))
 		{
-			fdf->map.x1 = fdf->map.startx - (fdf->map.scalx * y) \
-						+ (fdf->map.scalx * x);
-			fdf->map.y1 = coord_y(fdf, x, y, fdf->map.values[y][x]);
-			x++;
-			fdf->map.x2 = fdf->map.startx - (fdf->map.scalx * y) \
-						+ (fdf->map.scalx * x);
-			fdf->map.y2 = coord_y(fdf, x, y, fdf->map.values[y][x]);
+			fdf->map.x1 = coord_x(fdf, y, x);
+			fdf->map.y1 = coord_y(fdf, y, x, fdf->map.values[x][y]);
+			y++;
+			fdf->map.x2 = coord_x(fdf, y, x);
+			fdf->map.y2 = coord_y(fdf, y, x, fdf->map.values[x][y]);
 			bh_dispatch(fdf);
 		}
-		y++;
+		x++;
 	}
 }
 
@@ -51,21 +58,20 @@ void	draw_horizontal(t_fdf *fdf)
 	int x;
 	int y;
 
-	y = 0;
-	while (y < (fdf->map.height - 1))
+	x = 0;
+	while (x < (fdf->map.height - 1))
 	{
-		x = 0;
-		while (x < fdf->map.width && (fdf->map.width + 1 - x) > 0)
+		y = 0;
+		while (y < fdf->map.width && (fdf->map.width + 1 - y) > 0)
 		{
-			fdf->map.x1 = fdf->map.startx - (fdf->map.scalx * y) \
-						+ (fdf->map.scalx * x);
-			fdf->map.y1 = coord_y(fdf, x, y, fdf->map.values[y][x]);
-			fdf->map.x2 = fdf->map.startx - (fdf->map.scalx * (y + 1)) \
-						+ (fdf->map.scalx * x);
-			fdf->map.y2 = coord_y(fdf, x, y + 1, fdf->map.values[y + 1][x]);
+			fdf->map.x1 = coord_x(fdf, y, x);
+			fdf->map.y1 = coord_y(fdf, y, x, fdf->map.values[x][y]);
+			fdf->map.x2 = coord_x(fdf, y, x + 1);
+			fdf->map.y2 = coord_y(fdf, y, x + 1, fdf->map.values[x + 1][y]);
 			bh_dispatch(fdf);
-			x++;
+			y++;
 		}
+		x++;
 	}
 }
 
