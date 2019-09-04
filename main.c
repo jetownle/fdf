@@ -6,13 +6,13 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:05:34 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/27 18:04:10 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/09/04 04:24:56 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-/* 
+/*
 ** if there's an input file we get sent to fdf function
 ** otherwise display usage
 */
@@ -34,4 +34,3 @@ int			main(int argc, char **argv)
 	}
 	return (0);
 }
-

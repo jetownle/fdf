@@ -1,0 +1,5 @@
+//for (i = 0; i <  fdf->height; i++)
+	//	for (j = 0; j < fdf->width; j++)
+	//		printf("%d ", fdf->values[i][j]);
+	
+

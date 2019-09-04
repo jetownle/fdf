@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 03:46:58 by jetownle          #+#    #+#             */
-/*   Updated: 2019/09/04 01:34:48 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/09/04 04:25:45 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		coord_y(t_fdf *fdf, int x, int y, int z)
 		z = -30000;
 	}
 	return (fdf->starty + ((fdf->scaly) * x) \
-		   	+ ((fdf->scaly) * y) - (z * 2));
+			+ ((fdf->scaly) * y) - (z * 2));
 }
 
 void	draw_vertical(t_fdf *fdf)
@@ -81,4 +81,3 @@ int		render(t_fdf *fdf)
 	draw_horizontal(fdf);
 	return (1);
 }
-

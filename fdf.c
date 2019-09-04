@@ -6,13 +6,13 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 19:14:23 by jetownle          #+#    #+#             */
-/*   Updated: 2019/09/04 01:47:11 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/09/04 04:23:57 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void bh_dispatch(t_fdf *fdf)
+void	bh_dispatch(t_fdf *fdf)
 {
 	fdf->dx = fdf->x2 - fdf->x1;
 	fdf->dy = fdf->y2 - fdf->y1;
@@ -80,7 +80,7 @@ void	m_pos(t_fdf *fdf)
 	}
 }
 
-int exit_key(int keycode, void *param)
+int		exit_key(int keycode, void *param)
 {
 	param = 0;
 	if (keycode == KEY_ESCAPE)
@@ -88,27 +88,22 @@ int exit_key(int keycode, void *param)
 	return (0);
 }
 
-/* 
-** core of the program, calls most of the functions, makes the struct of structs
+/*
+** core of the program, calls most of the functions,
+** makes the struct of structs
 */
 
-int			fdf(int fd, char **argv)
+int		fdf(int fd, char **argv)
 {
 	t_fdf	fdf;
 	char	**gnlread;
 
 	init(&fdf);
 	gnlread = ft_read(&fdf, fd, argv);
-	//for (i = 0; i <  fdf->height; i++)
-	//	for (j = 0; j < fdf->width; j++)
-	//		printf("%d ", fdf->values[i][j]);
-	
 	fdf.init = mlx_init();
 	fdf.win = mlx_new_window(fdf.init, WIN_WIDTH, WIN_HEIGHT, "42");
 	mlx_expose_hook(fdf.win, render, &fdf);
 	mlx_key_hook(fdf.win, exit_key, &fdf);
 	mlx_loop(fdf.init);
-
 	return (0);
 }
-
