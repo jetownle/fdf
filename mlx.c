@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 03:46:58 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/30 22:47:22 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/09/04 01:34:48 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		coord_x(t_fdf *fdf, int x, int y)
 {
-	return (fdf->map.startx - (fdf->map.scalx * y) + (fdf->map.scalx * x));
+	return (fdf->startx - (fdf->scalx * y) + (fdf->scalx * x));
 }
 
 int		coord_y(t_fdf *fdf, int x, int y, int z)
@@ -27,8 +27,8 @@ int		coord_y(t_fdf *fdf, int x, int y, int z)
 	{
 		z = -30000;
 	}
-	return (fdf->map.starty + ((fdf->map.scaly) * x) \
-		   	+ ((fdf->map.scaly) * y) - (z * 2));
+	return (fdf->starty + ((fdf->scaly) * x) \
+		   	+ ((fdf->scaly) * y) - (z * 2));
 }
 
 void	draw_vertical(t_fdf *fdf)
@@ -37,16 +37,16 @@ void	draw_vertical(t_fdf *fdf)
 	int j;
 
 	i = 0;
-	while (i < fdf->map.height)
+	while (i < fdf->height)
 	{
 		j = 0;
-		while (j < (fdf->map.width - 1))
+		while (j < (fdf->width - 1))
 		{
-			fdf->map.x1 = coord_x(fdf, j, i);
-			fdf->map.y1 = coord_y(fdf, j, i, fdf->map.values[i][j]);
+			fdf->x1 = coord_x(fdf, j, i);
+			fdf->y1 = coord_y(fdf, j, i, fdf->values[i][j]);
 			j++;
-			fdf->map.x2 = coord_x(fdf, j, i);
-			fdf->map.y2 = coord_y(fdf, j, i, fdf->map.values[i][j]);
+			fdf->x2 = coord_x(fdf, j, i);
+			fdf->y2 = coord_y(fdf, j, i, fdf->values[i][j]);
 			bh_dispatch(fdf);
 		}
 		i++;
@@ -59,15 +59,15 @@ void	draw_horizontal(t_fdf *fdf)
 	int j;
 
 	i = 0;
-	while (i < (fdf->map.height - 1))
+	while (i < (fdf->height - 1))
 	{
 		j = 0;
-		while (j < fdf->map.width && (fdf->map.width + 1 - j) > 0)
+		while (j < fdf->width && (fdf->width + 1 - j) > 0)
 		{
-			fdf->map.x1 = coord_x(fdf, j, i);
-			fdf->map.y1 = coord_y(fdf, j, i, fdf->map.values[i][j]);
-			fdf->map.x2 = coord_x(fdf, j, i + 1);
-			fdf->map.y2 = coord_y(fdf, j, i + 1, fdf->map.values[i + 1][j]);
+			fdf->x1 = coord_x(fdf, j, i);
+			fdf->y1 = coord_y(fdf, j, i, fdf->values[i][j]);
+			fdf->x2 = coord_x(fdf, j, i + 1);
+			fdf->y2 = coord_y(fdf, j, i + 1, fdf->values[i + 1][j]);
 			bh_dispatch(fdf);
 			j++;
 		}

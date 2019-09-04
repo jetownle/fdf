@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:29:55 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/30 22:11:53 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/09/04 01:27:47 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,10 @@
 # define WIN_HEIGHT					(1080)
 # define KEY_ESCAPE			 		(0X35)
 
-typedef struct s_mlx
+typedef struct s_fdf
 {
 	void	*init;
 	void	*win;
-}				t_mlx;
-
-typedef struct s_map
-{
 	int		width;
 	int		height;
 	int		**values;
@@ -51,12 +47,6 @@ typedef struct s_map
 	int		scalx;
 	int		scaly;
 	int		j;
-}				t_map;
-
-typedef	struct	s_fdf
-{
-	t_mlx	mlx;
-	t_map	map;
 }				t_fdf;
 
 int		main(int argc, char **argv);

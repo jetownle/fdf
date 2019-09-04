@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:06:27 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/30 22:48:37 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/09/04 01:33:24 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	init(t_fdf *fdf)
 {
-	fdf->map.scalx = 20;
-	fdf->map.scaly = 20;
-	fdf->map.startx = 850;
-	fdf->map.starty = 50;
+	fdf->scalx = 20;
+	fdf->scaly = 20;
+	fdf->startx = 850;
+	fdf->starty = 50;
 }
 
 /* 
@@ -35,15 +35,15 @@ void	value_atoi(t_fdf *fdf, char **argv)
 	y = 0;
 	z = 0;
 	fd = open(argv[1], O_RDONLY);
-	while (get_next_line(fd, &line) == 1 && z != fdf->map.height)
+	while (get_next_line(fd, &line) == 1 && z != fdf->height)
 	{
-		fdf->map.values[z] = (int *)malloc(sizeof(int) * fdf->map.width);
+		fdf->values[z] = (int *)malloc(sizeof(int) * fdf->width);
 		if((split = ft_strsplit(line, ' ')))
 		{
-			fdf->map.j = 0;
-			while (split[fdf->map.j] && (y != fdf->map.width))
+			fdf->j = 0;
+			while (split[fdf->j] && (y != fdf->width))
 			{
-				fdf->map.values[z][y] = ft_atoi(split[fdf->map.j++]);
+				fdf->values[z][y] = ft_atoi(split[fdf->j++]);
 				y += 1;
 			}
 		}
@@ -104,10 +104,10 @@ char	**ft_read(t_fdf *fdf, int fd, char **argv)
 						gnlread[i - 1] = temp[i - 1];
 		gnlread[count - 1] = holder;
 		ft_strdel((char **)&temp);
-		fdf->map.width = value_count(*gnlread);
+		fdf->width = value_count(*gnlread);
 	}
-	fdf->map.height = count;
-	fdf->map.values = (int **)malloc(sizeof(int *) * fdf->map.height);
+	fdf->height = count;
+	fdf->values = (int **)malloc(sizeof(int *) * fdf->height);
 	value_atoi(fdf, argv);
 	return (gnlread);
 }

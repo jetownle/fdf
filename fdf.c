@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 19:14:23 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/30 22:49:50 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/09/04 01:47:11 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void bh_dispatch(t_fdf *fdf)
 {
-	fdf->map.dx = fdf->map.x2 - fdf->map.x1;
-	fdf->map.dy = fdf->map.y2 - fdf->map.y1;
-	fdf->map.dx = abs(fdf->map.dx);
-	fdf->map.dy = abs(fdf->map.dy);
-	fdf->map.incx = (fdf->map.x2 > fdf->map.x1) ? 1 : -1;
-	fdf->map.incy = (fdf->map.y2 > fdf->map.y1) ? 1 : -1;
-	if (fdf->map.dx > fdf->map.dy)
+	fdf->dx = fdf->x2 - fdf->x1;
+	fdf->dy = fdf->y2 - fdf->y1;
+	fdf->dx = abs(fdf->dx);
+	fdf->dy = abs(fdf->dy);
+	fdf->incx = (fdf->x2 > fdf->x1) ? 1 : -1;
+	fdf->incy = (fdf->y2 > fdf->y1) ? 1 : -1;
+	if (fdf->dx > fdf->dy)
 		m_neg(fdf);
 	else
 		m_pos(fdf);
@@ -34,21 +34,21 @@ void	m_neg(t_fdf *fdf)
 	int	i;
 
 	i = 0;
-	mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, fdf->map.x1, fdf->map.y1, 0xFFFFFF);
-	e = (2 * fdf->map.dy) - fdf->map.dx;
-	inc1 = 2 * (fdf->map.dy - fdf->map.dx);
-	inc2 = 2 * fdf->map.dy;
-	while (i < fdf->map.dx)
+	mlx_pixel_put(fdf->init, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
+	e = (2 * fdf->dy) - fdf->dx;
+	inc1 = 2 * (fdf->dy - fdf->dx);
+	inc2 = 2 * fdf->dy;
+	while (i < fdf->dx)
 	{
 		if (e >= 0)
 		{
-			fdf->map.y1 = fdf->map.y1 + fdf->map.incy;
+			fdf->y1 = fdf->y1 + fdf->incy;
 			e = e + inc1;
 		}
 		else
 			e = e + inc2;
-		fdf->map.x1 = fdf->map.x1 + fdf->map.incx;
-		mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, fdf->map.x1, fdf->map.y1, 0xFFFFFF);
+		fdf->x1 = fdf->x1 + fdf->incx;
+		mlx_pixel_put(fdf->init, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
 		i++;
 	}
 }
@@ -61,21 +61,21 @@ void	m_pos(t_fdf *fdf)
 	int	i;
 
 	i = 0;
-	mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, fdf->map.x1, fdf->map.y1, 0xFFFFFF);
-	e = (2 * fdf->map.dx) - fdf->map.dy;
-	inc1 = 2 * (fdf->map.dx - fdf->map.dy);
-	inc2 = 2 * fdf->map.dx;
-	while (i < fdf->map.dy)
+	mlx_pixel_put(fdf->init, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
+	e = (2 * fdf->dx) - fdf->dy;
+	inc1 = 2 * (fdf->dx - fdf->dy);
+	inc2 = 2 * fdf->dx;
+	while (i < fdf->dy)
 	{
 		if (e >= 0)
 		{
-			fdf->map.x1 = fdf->map.x1 + fdf->map.incx;
+			fdf->x1 = fdf->x1 + fdf->incx;
 			e = e + inc1;
 		}
 		else
 			e = e + inc2;
-		fdf->map.y1 = fdf->map.y1 + fdf->map.incy;
-		mlx_pixel_put(fdf->mlx.init, fdf->mlx.win, fdf->map.x1, fdf->map.y1, 0xFFFFFF);
+		fdf->y1 = fdf->y1 + fdf->incy;
+		mlx_pixel_put(fdf->init, fdf->win, fdf->x1, fdf->y1, 0xFFFFFF);
 		i++;
 	}
 }
@@ -94,22 +94,20 @@ int exit_key(int keycode, void *param)
 
 int			fdf(int fd, char **argv)
 {
-	t_fdf	*fdf;
+	t_fdf	fdf;
 	char	**gnlread;
 
-	if (!(fdf = (t_fdf *)malloc(sizeof(t_fdf))))
-		perror("error mallocing fdf struct");
-	init(fdf);
-	gnlread = ft_read(fdf, fd, argv);
-	//for (i = 0; i <  fdf->map.height; i++)
-	//	for (j = 0; j < fdf->map.width; j++)
-	//		printf("%d ", fdf->map.values[i][j]);
+	init(&fdf);
+	gnlread = ft_read(&fdf, fd, argv);
+	//for (i = 0; i <  fdf->height; i++)
+	//	for (j = 0; j < fdf->width; j++)
+	//		printf("%d ", fdf->values[i][j]);
 	
-	fdf->mlx.init = mlx_init();
-	fdf->mlx.win = mlx_new_window(fdf->mlx.init, WIN_WIDTH, WIN_HEIGHT, "42");
-	mlx_expose_hook(fdf->mlx.win, render, &fdf);
-	mlx_key_hook(fdf->mlx.win, exit_key, &fdf);
-	mlx_loop(fdf->mlx.init);
+	fdf.init = mlx_init();
+	fdf.win = mlx_new_window(fdf.init, WIN_WIDTH, WIN_HEIGHT, "42");
+	mlx_expose_hook(fdf.win, render, &fdf);
+	mlx_key_hook(fdf.win, exit_key, &fdf);
+	mlx_loop(fdf.init);
 
 	return (0);
 }
