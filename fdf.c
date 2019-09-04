@@ -6,11 +6,25 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 19:14:23 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/30 17:42:18 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/30 22:49:50 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void bh_dispatch(t_fdf *fdf)
+{
+	fdf->map.dx = fdf->map.x2 - fdf->map.x1;
+	fdf->map.dy = fdf->map.y2 - fdf->map.y1;
+	fdf->map.dx = abs(fdf->map.dx);
+	fdf->map.dy = abs(fdf->map.dy);
+	fdf->map.incx = (fdf->map.x2 > fdf->map.x1) ? 1 : -1;
+	fdf->map.incy = (fdf->map.y2 > fdf->map.y1) ? 1 : -1;
+	if (fdf->map.dx > fdf->map.dy)
+		m_neg(fdf);
+	else
+		m_pos(fdf);
+}
 
 void	m_neg(t_fdf *fdf)
 {
@@ -66,12 +80,12 @@ void	m_pos(t_fdf *fdf)
 	}
 }
 
-void	init(t_fdf *fdf)
+int exit_key(int keycode, void *param)
 {
-	fdf->map.scalx = 20;
-	fdf->map.scaly = 20;
-	fdf->map.startx = 850;
-	fdf->map.starty = 50;
+	param = 0;
+	if (keycode == KEY_ESCAPE)
+		exit(0);
+	return (0);
 }
 
 /* 

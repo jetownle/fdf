@@ -6,11 +6,19 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:06:27 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/30 15:47:18 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/30 22:48:37 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	init(t_fdf *fdf)
+{
+	fdf->map.scalx = 20;
+	fdf->map.scaly = 20;
+	fdf->map.startx = 850;
+	fdf->map.starty = 50;
+}
 
 /* 
 ** converting the ascii file into an int map

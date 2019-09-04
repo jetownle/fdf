@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:29:55 by jetownle          #+#    #+#             */
-/*   Updated: 2019/08/30 15:01:56 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/08/30 22:11:53 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define FDF_H
 
 #include "unistd.h"
-#include "fcntl.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "fcntl.h"
 #include "string.h"
 #include "math.h"
-#include "minilibx/mlx.h"
 #include "libft/libft.h"
+#include "minilibx/mlx.h"
 #include "minilibx_macos/mlx.h"
 
 # define WIN_WIDTH					(1920)
@@ -31,12 +31,12 @@ typedef struct s_mlx
 {
 	void	*init;
 	void	*win;
-	void	*image;
-	void	*ptr;
 }				t_mlx;
 
 typedef struct s_map
 {
+	int		width;
+	int		height;
 	int		**values;
 	int		x1;
 	int		y1;
@@ -44,17 +44,13 @@ typedef struct s_map
 	int		y2;
 	int		dx;
 	int		dy;
-	int		incx;
-	int		incy;
-	int		i;
-	int		j;
-	int		k;
-	int		width;
-	int		height;
 	int		startx;
 	int		starty;
+	int		incx;
+	int		incy;
 	int		scalx;
 	int		scaly;
+	int		j;
 }				t_map;
 
 typedef	struct	s_fdf
@@ -65,20 +61,16 @@ typedef	struct	s_fdf
 
 int		main(int argc, char **argv);
 int		fdf(int fd, char **argv);
-int exit_key(int keycode, void *param);
-int		render(t_fdf *fdf);
-
-/* 
-** Read functs
-*/
 char	**ft_read(t_fdf *fdf,int fd, char **argv);
-void value_atoi(t_fdf *fdf, char **argv);
-int value_count(char *line);
+void	init(t_fdf *fdf);
+int		render(t_fdf *fdf);
+int 	exit_key(int keycode, void *param);
+int 	value_count(char *line);
+void 	value_atoi(t_fdf *fdf, char **argv);
 void	draw_vertical(t_fdf *fdf);
 void	draw_horizontal(t_fdf *fdf);
 void 	bh_dispatch(t_fdf *fdf);
 void	m_neg(t_fdf *fdf);
 void	m_pos(t_fdf *fdf);
-void	init(t_fdf *fdf);
 
 #endif
