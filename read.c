@@ -6,7 +6,7 @@
 /*   By: jetownle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/08 00:06:27 by jetownle          #+#    #+#             */
-/*   Updated: 2019/09/04 04:32:47 by jetownle         ###   ########.fr       */
+/*   Updated: 2019/09/04 04:56:08 by jetownle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	value_atoi(t_fdf *fdf, char **argv)
 				fdf->values[z][y] = ft_atoi(split[fdf->j++]);
 			}
 		}
-		y = 0;
+		y = -1;
 		z += 1;
 	}
 	close(fd);
